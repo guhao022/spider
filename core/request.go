@@ -4,13 +4,14 @@ import (
 	"net/http"
 	"strings"
 	"net/url"
-	
-	"spider/core/common/log"
 )
 
 // 请求
 type Request struct {
-	req *http.Request
+	url string
+	method string
+	postBody url.Values
+	header http.Header
 	depth int
 }
 
@@ -19,18 +20,20 @@ func NewRequest() *Request {
 }
 
 // 设置url
-func (req *Request) SetUrl(u string) *Request {
-	url, err := url.Parse(u)
-	if err != nil {
-		log.Error()
-	}
-	req.req.URL = url
+func (req *Request) SetUrl(url string) *Request {
+	req.url = url
 	return req
 }
 
 // 设置访问方式
 func (req *Request) SetMethod(method string) *Request {
 	req.method = strings.ToUpper(method)
+	return req
+}
+
+// 设置参数
+func (req *Request) SetPostBody(b url.Values) *Request {
+	req.postBody = b
 	return req
 }
 
@@ -68,6 +71,11 @@ func (req *Request) GetMethod() string {
 	return req.method
 }
 
+// 获取参数信息
+func (req *Request) GetPostBody() url.Values {
+	return req.postBody
+}
+
 // 获取header信息
 func (req *Request) GetHeader() http.Header {
 	return req.header
@@ -79,7 +87,7 @@ func (req *Request) GetCookie() string {
 }
 
 // 获取深度值。
-func (req *Request) GetDepth() uint32 {
+func (req *Request) GetDepth() int {
 	return req.depth
 }
 
