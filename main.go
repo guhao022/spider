@@ -1,11 +1,14 @@
 package main
 
 import (
+	"github.com/num5/web"
+
 	"spider/core/common/log"
 	"spider/core"
 
-	"github.com/num5/web"
 	"net/http"
+	"io/ioutil"
+	"bufio"
 )
 
 func main() {
@@ -35,7 +38,8 @@ func fc(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.CLog("[ERRO] %s", err)
 	}
-	i := resp.HttpResp()
+	ra := resp.HttpResp()
+	s, err := ioutil.ReadAll(bufio.NewReader(ra.Body))
 
-	w.Write()
+	w.Write([]byte(s))
 }
