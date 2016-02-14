@@ -7,8 +7,9 @@ import (
 	"spider/core"
 
 	"net/http"
-	"io/ioutil"
-	"bufio"
+	//"io/ioutil"
+	//"bufio"
+	"encoding/json"
 )
 
 func main() {
@@ -17,8 +18,7 @@ func main() {
 
 	r.Get("/", fc)
 
-
-	log.CLog("[TRAC] Server start listen on # %d # ", 9900)
+	log.CLog("[TRAC] Server start listen on # %d #", 9900)
 
 	err := http.ListenAndServe(":9900", r)
 
@@ -39,7 +39,11 @@ func fc(w http.ResponseWriter, r *http.Request) {
 		log.CLog("[ERRO] %s", err)
 	}
 	ra := resp.HttpResp()
-	s, err := ioutil.ReadAll(bufio.NewReader(ra.Body))
 
-	w.Write([]byte(s))
+	j, err := json.Marshal(ra.Body)
+	if err != nil {
+		log.CLog(err.Error())
+	}
+
+	w.Write(j)
 }
