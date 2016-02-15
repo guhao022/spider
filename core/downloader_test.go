@@ -2,7 +2,7 @@ package core
 
 import (
 	"testing"
-	"spider/core/common/log"
+	"spider/utils/log"
 	"bufio"
 	"io/ioutil"
 )

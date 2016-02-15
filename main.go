@@ -3,13 +3,12 @@ package main
 import (
 	"github.com/num5/web"
 
-	"spider/core/common/log"
+	"spider/utils/log"
 	"spider/core"
 
 	"net/http"
-	//"io/ioutil"
-	//"bufio"
-	"encoding/json"
+	"io/ioutil"
+	//"encoding/json"
 )
 
 func main() {
@@ -30,7 +29,7 @@ func main() {
 
 func fc(w http.ResponseWriter, r *http.Request) {
 	req := core.NewRequest()
-	req.SetUrl("http://www.golune.com").SetMethod("get").SetDepth(0)
+	req.SetUrl("http://www.baidu.com").SetMethod("get").SetDepth(0)
 
 	downclient := core.NewPageDownloader(nil)
 
@@ -40,10 +39,15 @@ func fc(w http.ResponseWriter, r *http.Request) {
 	}
 	ra := resp.HttpResp()
 
-	j, err := json.Marshal(ra.Body)
+	/*j, err := json.Marshal(ra.Body)
+	if err != nil {
+		log.CLog(err.Error())
+	}*/
+	s, err := ioutil.ReadAll(ra.Body)
+
 	if err != nil {
 		log.CLog(err.Error())
 	}
 
-	w.Write(j)
+	w.Write([]byte(s))
 }
