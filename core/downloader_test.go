@@ -8,8 +8,8 @@ import (
 )
 
 func TestDownload(t *testing.T) {
-	req := NewRequest()
-	req.SetUrl("http://www.golune.com").SetMethod("get").SetDepth(0)
+	req := NewRequest("http://www.golune.com")
+	req.SetMethod("get").SetDepth(0)
 
 	downclient := NewPageDownloader(nil)
 

@@ -44,6 +44,7 @@ func fc(w http.ResponseWriter, r *http.Request) {
 		log.CLog(err.Error())
 	}*/
 	s, err := ioutil.ReadAll(ra.Body)
+	defer ra.Body.Close()
 
 	if err != nil {
 		log.CLog(err.Error())

@@ -15,8 +15,8 @@ type Request struct {
 	depth int
 }
 
-func NewRequest() *Request {
-	return new(Request)
+func NewRequest(url string) *Request {
+	return &Request{url: url}
 }
 
 // 设置url
