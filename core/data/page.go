@@ -1,4 +1,4 @@
-package core
+package data
 import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bitly/go-simplejson"
@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"bufio"
 	"io"
+
+	"spider/core/context"
 )
 
 type Page struct {
@@ -13,7 +15,7 @@ type Page struct {
 	isfail   bool
 	errormsg string
 
-	req *Request
+	req *context.Request
 
 	item *Item
 
@@ -25,10 +27,10 @@ type Page struct {
 
 	jsonMap *simplejson.Json
 
-	targetRequests []*Request
+	targetRequests []*context.Request
 }
 
-func NewPage(req *Request) *Page {
+func NewPage(req *context.Request) *Page {
 	return &Page{req: req}
 }
 
@@ -36,12 +38,12 @@ func (this *Page) Errormsg() string {
 	return this.errormsg
 }
 
-func (this *Page) SetRequest(r *Request) *Page {
+func (this *Page) SetRequest(r *context.Request) *Page {
 	this.req = r
 	return this
 }
 
-func (this *Page) GetRequest() *Request {
+func (this *Page) GetRequest() *context.Request {
 	return this.req
 }
 
@@ -62,7 +64,7 @@ func (this *Page) GetCookies() []*http.Cookie {
 }
 
 func (this *Page) AddTargetRequest(url string) *Page {
-	this.targetRequests = append(this.targetRequests, NewRequest(url))
+	this.targetRequests = append(this.targetRequests, context.NewRequest(url))
 	return this
 }
 
@@ -74,7 +76,7 @@ func (this *Page) AddTargetRequests(urls []string) *Page {
 	return this
 }
 
-func (this *Page) GetTargetRequests() []*Request {
+func (this *Page) GetTargetRequests() []*context.Request {
 	return this.targetRequests
 }
 

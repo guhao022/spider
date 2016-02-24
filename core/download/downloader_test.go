@@ -1,14 +1,16 @@
-package core
+package download
 
 import (
 	"testing"
 	"spider/utils/log"
 	"bufio"
 	"io/ioutil"
+	"spider/core/context"
+
 )
 
 func TestDownload(t *testing.T) {
-	req := NewRequest("http://www.golune.com")
+	req := context.NewRequest("http://www.golune.com")
 	req.SetMethod("get").SetDepth(0)
 
 	downclient := NewPageDownloader(nil)

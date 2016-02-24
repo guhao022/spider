@@ -1,9 +1,12 @@
-package core
+package download
 
-import "net/http"
+import (
+	"net/http"
+	"spider/core/context"
+)
 
 type Downloader interface {
-	Download(*Request) (*Response, error)
+	Download(*context.Request) (*context.Response, error)
 }
 
 type PageDownloader struct {
@@ -17,7 +20,7 @@ func NewPageDownloader(client *http.Client) *PageDownloader {
 	return &PageDownloader{client}
 }
 
-func (self *PageDownloader) Download(req *Request) (resp *Response, err error) {
+func (self *PageDownloader) Download(req *context.Request) (resp *context.Response, err error) {
 	var httpResp *http.Response
 
 	url := req.GetUrl()
@@ -39,7 +42,7 @@ func (self *PageDownloader) Download(req *Request) (resp *Response, err error) {
 		}
 	}
 
-	return NewResponse(req, httpResp), nil
+	return context.NewResponse(req, httpResp), nil
 }
 
 

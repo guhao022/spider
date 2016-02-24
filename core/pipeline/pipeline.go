@@ -1,29 +1,14 @@
-package core
+package pipeline
 
 import (
 	"fmt"
 	"sync/atomic"
+	"spider/core/data"
 )
-
-// 条目
-type Item map[string]interface{}
-
-func (this *Item) AddItem(key string, item interface{}) {
-	this[key] = item
-}
-
-func (this *Item) GetItem(key string) (interface{}, bool) {
-	i, ok := this[key]
-	return i, ok
-}
-
-// 被用来处理条目的函数类型。
-type ProcessItem func(item Item) (result Item, err error)
-
 
 // 条目处理管道
 type ItemPipeline interface {
-	Send(item Item) []error
+	Send(item data.Item) []error
 	Count() []uint64
 	ProcessingNumber() uint64
 	Summary() string
@@ -51,7 +36,7 @@ type myItemPipeline struct {
 	processingNumber uint64        // 正在被处理的条目的数量。
 }
 
-func (this *myItemPipeline) Send(item Item) []error {
+func (this *myItemPipeline) Send(item data.Item) []error {
 	return nil
 }
 
