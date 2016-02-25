@@ -1,4 +1,5 @@
 package data
+
 import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bitly/go-simplejson"
