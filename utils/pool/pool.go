@@ -27,8 +27,8 @@ func NewPool(size int) (*Pool, error) {
 type pool struct {
 	size    int64          // 池的总容量。
 	used 	int64		// 池的使用量
-	job   chan interface{}
-	mu       sync.Mutex
+	job     chan interface{}
+	mu      sync.Mutex
 }
 
 func (p *pool) Get() (interface{}, error) {
