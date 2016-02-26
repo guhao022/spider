@@ -1,4 +1,4 @@
-package data
+package analyzer
 
 // 条目
 type Item map[string]interface{}

@@ -1,4 +1,4 @@
-package data
+package analyzer
 
 import (
 	"github.com/PuerkitoBio/goquery"
