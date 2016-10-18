@@ -8,7 +8,7 @@ import (
 	"bufio"
 	"io"
 
-	"spider/core/context"
+	"spider/utils/context"
 )
 
 type Page struct {
@@ -64,16 +64,27 @@ func (this *Page) GetCookies() []*http.Cookie {
 	return this.cookies
 }
 
-func (this *Page) AddTargetRequest(url string) *Page {
-	this.targetRequests = append(this.targetRequests, context.NewRequest(url))
+func (this *Page) AddTargetRequest(url string, respType string) *Page {
+	this.targetRequests = append(this.targetRequests, context.NewRequest(url, respType, "", "GET", "", nil, nil, nil, nil))
 	return this
 }
 
-func (this *Page) AddTargetRequests(urls []string) *Page {
+func (this *Page) AddTargetRequests(urls []string, respType string) *Page {
 	for _, url := range urls {
-		this.AddTargetRequest(url)
+		this.AddTargetRequest(url, respType)
 	}
+	return this
+}
 
+func (this *Page) AddTargetRequestWithParams(req *context.Request) *Page {
+	this.targetRequests = append(this.targetRequests, req)
+	return this
+}
+
+func (this *Page) AddTargetRequestsWithParams(reqs []*context.Request) *Page {
+	for _, req := range reqs {
+		this.AddTargetRequestWithParams(req)
+	}
 	return this
 }
 
