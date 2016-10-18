@@ -2,6 +2,13 @@ package context
 
 import "net/http"
 
+type ResourceManage interface {
+	GetOne()
+	FreeOne()
+	Has() uint
+	Left() uint
+}
+
 type Response struct {
 	//抓取请求相关信息
 	req *Request
